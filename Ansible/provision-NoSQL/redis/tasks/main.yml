@@ -1,0 +1,5 @@
+---
+- name: install redis
+  apt:
+    name: "redis-server={{ redis_version }}"
+    state: present

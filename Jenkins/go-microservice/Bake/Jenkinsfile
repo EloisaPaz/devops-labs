@@ -1,0 +1,15 @@
+node {
+   stage('preparation') {
+       checkout([
+           $class: 'GitSCM',
+           branches: [[name: '*/master']],
+           doGenerateSubmoduleConfigurations: false,
+           extensions: [[$class: 'CleanBeforeCheckout']],
+           submoduleCfg: [],
+           userRemoteConfigs: [[url: 'https://github.com/EloisaPaz/script-for-jenkins.git']]
+       ])
+   }
+   stage('Bake') {
+      sh 'packer build dockerImage.json'
+   }
+}

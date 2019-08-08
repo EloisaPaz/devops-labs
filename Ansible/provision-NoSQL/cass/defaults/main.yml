@@ -1,0 +1,4 @@
+---
+cassandra_version: 3.11.4
+cassandra_keys: https://www.apache.org/dist/cassandra/KEYS
+cassandra_repo: http://www.apache.org/dist/cassandra/debian

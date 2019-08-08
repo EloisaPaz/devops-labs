@@ -1,0 +1,5 @@
+---
+- name: install http
+  apt:
+    name: "apt-transport-https={{ https_version }}"
+    update_cache: yes

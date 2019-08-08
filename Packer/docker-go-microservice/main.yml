@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  become: yes
+  become_user: root
+  tasks:
+    - name: install git
+      apt:
+        name: git
+        state: latest
+    - name: install go
+      apt:
+        name: golang-go
+        state: present
+    - name: get gorilla/mux
+      git:
+        repo: "https://github.com/gorilla/mux"
+        dest: go/src/github.com/gorilla/mux
+    - name: copy file
+      copy: 
+        src: go/
+        dest: /root/go/

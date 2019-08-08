@@ -1,0 +1,11 @@
+---
+- name: install go
+  apt:
+    name: golang
+    state: present
+- name: get gorilla/mux
+  git:
+    repo: "https://github.com/gorilla/mux"
+    dest: /root/go/src/github.com/gorilla/mux
+- name: calculator
+  shell: go run calculator.go &

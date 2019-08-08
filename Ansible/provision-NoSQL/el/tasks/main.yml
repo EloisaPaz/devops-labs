@@ -1,0 +1,17 @@
+---
+- name: elasticsearch keys
+  apt_key:
+    url: "{{ elasticsearch_keys }}"
+    state: present
+- name: elasticsearch repo
+  apt_repository:
+    repo: deb "{{ elasticsearch_repo }}" stable main
+    state: present
+- name: install elasticsearch
+  apt:
+    name: elasticsearch
+    update_cache: yes
+- name: Start elasticsearch
+  service:
+    name: elasticsearch
+    state: started

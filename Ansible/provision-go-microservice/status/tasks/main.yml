@@ -1,0 +1,9 @@
+---
+- name: teste
+  shell: pid=$(pidof calculator); if [ ! -z $pid ]; then echo 'Service is running'; else echo 'Service is not running'; fi;
+
+  register: status
+
+- name: debug teste
+  debug:
+    msg: "{{status.stdout}}"

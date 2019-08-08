@@ -1,0 +1,42 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu:19.04",
+      "commit": "true",
+      "changes": [
+        "ENTRYPOINT [\"go\", \"run\", \"calculator.go\"]"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "apt-get -y update",
+        "apt-get install -y software-properties-common",
+        "apt-add-repository ppa:ansible/ansible",
+        "apt-get -y update",
+        "apt-get install -y ansible"
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "main.yml"
+    },
+    {
+      "type": "file",
+      "source": "./calculator.go",
+      "destination": "./calculator.go"
+    }
+  ],
+   "post-processors": [
+       [
+           {
+               "type": "docker-tag",
+               "repository": "golang-calculator",
+               "tag": "latest"
+           }
+       ]
+   ]
+}

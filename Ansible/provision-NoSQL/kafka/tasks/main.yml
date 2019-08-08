@@ -1,0 +1,14 @@
+---
+- name: create directory
+  file:
+    path: "{{ kafka_path }}"
+    state: directory
+- name: unzip
+  unarchive:
+    src: "{{ kafka_url }}"
+    dest: "{{ kafka_path }}"
+    remote_src: yes
+- name: start zookeeper
+  shell: "{{ kafka_path }}/{{ kafka_version }}/bin/zookeeper-server-start.sh {{ kafka_path }}/{{ kafka_version }}/config/zookeeper.properties &"
+- name: start kafka
+  shell: "{{ kafka_path }}/{{ kafka_version }}/bin/kafka-server-start.sh {{ kafka_path }}/{{ kafka_version }}/config/server.properties &"

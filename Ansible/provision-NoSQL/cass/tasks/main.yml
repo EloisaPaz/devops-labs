@@ -1,0 +1,17 @@
+---
+- name: cassandra keys
+  apt_key:
+    url: "{{ cassandra_keys }}"
+    state: present
+- name: cassandra repo
+  apt_repository:
+    repo: deb "{{ cassandra_repo }}" 311x main
+    state: present
+- name: install cassandra
+  apt:
+    name: cassandra
+    update_cache: yes
+- name: Start cassandra
+  service:
+    name: cassandra
+    state: started

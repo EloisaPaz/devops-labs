@@ -1,0 +1,4 @@
+---
+elasticsearch_version: 7.2.0
+elasticsearch_keys: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+elasticsearch_repo: https://artifacts.elastic.co/packages/7.x/apt

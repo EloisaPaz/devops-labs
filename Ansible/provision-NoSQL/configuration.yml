@@ -1,0 +1,42 @@
+---
+- name: run
+  hosts: "*"
+  become: yes
+  become_user: root
+  tasks:
+    - copy:
+        src: base/
+        dest: /home/vagrant/
+        remote_src: yes
+    - copy:
+        src: java/
+        dest: /home/vagrant/
+        remote_src: yes
+    - copy:
+        src: http/
+        dest: /home/vagrant/
+        remote_src: yes
+    - copy:
+        src: cass/
+        dest: /home/vagrant/
+        remote_src: yes
+    - copy:
+        src: el/
+        dest: /home/vagrant/
+        remote_src: yes
+    - copy:
+        src: kafka/
+        dest: /home/vagrant/
+        remote_src: yes
+    - copy:
+        src: redis/
+        dest: /home/vagrant/
+        remote_src: yes
+  roles:
+    - base
+    - java
+    - http
+    - cass
+    - el
+    - kafka
+    - redis

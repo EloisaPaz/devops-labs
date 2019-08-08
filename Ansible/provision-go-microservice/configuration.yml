@@ -1,0 +1,22 @@
+---
+- name: "run tasks on all hosts"
+  hosts: "*"
+  become: yes
+  become_user: root
+  tasks:
+    - copy:
+        src: go/
+        dest: /home/vagrant/
+        remote_src: yes
+    - copy:
+        src: base/
+        dest: /home/vagrant/
+        remote_src: yes
+    - copy:
+        src: calculator.go
+        dest: /home/vagrant/calculator.go
+        remote_src: yes
+  roles:
+    - base 
+    - go
+    - status
