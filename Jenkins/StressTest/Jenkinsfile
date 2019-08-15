@@ -2,16 +2,16 @@ node {
    stage('preparation') {
        checkout([
            $class: 'GitSCM',
-           branches: [[name: '*/Tema16']],
+           branches: [[name: '*/master']],
            doGenerateSubmoduleConfigurations: false,
            extensions: [[$class: 'CleanBeforeCheckout']],
-           userRemoteConfigs: [[credentialsId: 'git-credentials', url: 'https://github.com/EloisaPaz/jts.devops.2019.1.git']]
+           userRemoteConfigs: [[credentialsId: 'git-credentials', url: 'https://github.com/EloisaPaz/devops-labs.git']]
        ])
    }
    stage('Test') {
-       fileExist = fileExists 'eloisa-paz/Tema16/Gatling/src/test/scala/calculator/CalculatorSimulation.scala'
+       fileExist = fileExists 'StressTest/Gatling/src/test/scala/calculator/CalculatorSimulation.scala'
         if (fileExist) {
-            dir('eloisa-paz/Tema16/Gatling') {
+            dir('StressTest/Gatling') {
                 sh 'sbt gatling:test'
             }
         } else {

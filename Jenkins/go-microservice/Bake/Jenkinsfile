@@ -6,10 +6,12 @@ node {
            doGenerateSubmoduleConfigurations: false,
            extensions: [[$class: 'CleanBeforeCheckout']],
            submoduleCfg: [],
-           userRemoteConfigs: [[url: 'https://github.com/EloisaPaz/script-for-jenkins.git']]
+           userRemoteConfigs: [[url: 'https://github.com/EloisaPaz/devops-labs.git']]
        ])
    }
    stage('Bake') {
-      sh 'packer build dockerImage.json'
+       dir('Packer/docker-go-microservice') {
+        sh 'packer build dockerImage.json'
+       }
    }
 }

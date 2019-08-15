@@ -1,0 +1,30 @@
+node {
+   stage('preparation') {
+       checkout([
+           $class: 'GitSCM',
+           branches: [[name: '*/master']],
+           doGenerateSubmoduleConfigurations: false,
+           extensions: [[$class: 'CleanBeforeCheckout']],
+           userRemoteConfigs: [[credentialsId: 'git-credentials', url: 'https://github.com/EloisaPaz/devops-labs.git']]
+       ])
+   }
+   stage('Build image') {
+       dockerfileExist = fileExists 'Kubernetes/minikube-calculator-go/Dockerfile'
+       calculatorExist = fileExists 'Kubernetes/minikube-calculator-go/calculator.go'
+        if (dockerfileExist && calculatorExist) {
+            dir('Kubernetes/minikube-calculator-go') {
+                sh 'docker build -t calculator .'
+            }
+        } else {
+            error 'Fail to create docker image!'
+        }
+   }
+   properties([parameters([string(defaultValue: '', description: 'IP adress', name: 'serverUrl', trim: true)])])
+   stage('Apply Kubernetes files') {
+     dir('Kubernetes/minikube-calculator-go') {
+        withKubeConfig([credentialsId: 'kubernetes-cli-certificate', serverUrl:(params.serverUrl)]) {
+                        sh 'kubectl apply -f . --namespace=calculator'
+        }
+    }  
+  }
+}

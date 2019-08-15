@@ -1,0 +1,16 @@
+node {
+   stage('preparation') {
+       checkout([
+           $class: 'GitSCM',
+           branches: [[name: '*/master']],
+           doGenerateSubmoduleConfigurations: false,
+           extensions: [[$class: 'CleanBeforeCheckout']],
+           userRemoteConfigs: [[credentialsId: 'git-credentials', url: 'https://github.com/EloisaPaz/devops-labs.git']]
+       ])
+   }
+   stage('provision') {
+        dir('Vault/docker-ansible-vault') {
+            ansiblePlaybook playbook: 'configuration.yml', vaultCredentialsId: 'vault_password', credentialsId: 'system_credentials'
+        }
+   }
+}

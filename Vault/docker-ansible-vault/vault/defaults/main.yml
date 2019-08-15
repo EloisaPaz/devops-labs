@@ -1,0 +1,5 @@
+---
+vault_url: https://releases.hashicorp.com/vault
+vault_path: /usr/local/bin/
+vault_version: 1.2.0
+vault_operational_system: linux_amd64.zip

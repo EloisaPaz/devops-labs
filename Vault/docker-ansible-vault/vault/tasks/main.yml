@@ -1,0 +1,19 @@
+---
+- name: create directory
+  file:
+    path: "{{ vault_path }}"
+    state: directory
+- name: install unzip
+  apt:
+    name: unzip
+    state: present
+- name: unarchive
+  unarchive:
+    src: "{{vault_url}}/{{vault_version}}/vault_{{vault_version}}_{{vault_operational_system}}"
+    dest: "{{ vault_path }}"
+    remote_src: yes
+- name: vault permission
+  file:
+    path: "{{ vault_path }}/vault"
+    state: file
+    mode: u+x
